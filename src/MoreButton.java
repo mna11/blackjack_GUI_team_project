@@ -6,7 +6,7 @@ public class MoreButton extends JButton implements ActionListener{
 	HumanPlayer humanPlayer;
 	
 	public MoreButton(String buttonName, Dealer d, HumanPlayer humanplayer, GameBoard f) {
-		
+		super(buttonName);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
