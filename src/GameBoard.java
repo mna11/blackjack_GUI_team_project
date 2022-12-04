@@ -106,7 +106,7 @@ public class GameBoard extends JFrame{
 		dealer.dealOneTo(humanPlayer);
 		dealer.dealOneTo(computerPlayer);
 		if (scoreCheck() == 1)
-			GameOver();
+			gameOver();
 		
 		setTitle("BLACKJACK_GUI");
 		setSize(gameBoardWidth, gameBoardHeight);
@@ -116,7 +116,7 @@ public class GameBoard extends JFrame{
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 	
-	public void GameOver() {
+	public void gameOver() {
 		
 	}
 	
