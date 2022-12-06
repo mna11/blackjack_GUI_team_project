@@ -100,7 +100,7 @@ public class GameBoard extends JFrame{
 		cp.add(northPanel, BorderLayout.SOUTH);
 		
 		//2장씩 나눠주고 시작
-		//플레이어가 블랙잭인 경우 바로 GameOver로 감
+		//플레이어가 블랙잭인 경우 바로 gameOver()로 감
 		dealer.dealOneTo(humanPlayer);
 		dealer.dealOneTo(computerPlayer);
 		dealer.dealOneTo(humanPlayer);
@@ -123,7 +123,7 @@ public class GameBoard extends JFrame{
 	
 	public void update() {
 		Card[] hCD = humanPlayer.showCards();
-		int cnt = hCD.length == 2 ? 1 : 2;
+		int cnt = hCD.length == 2 ? 1 : 2; //처음 배부했을 때는 length가 2이므로 1로 해준다.
 		for (int i = hCD.length-1; cnt >= 0; i--) {
 			String s = hCD[i].getSuit();
 			int r = hCD[i].getRank();
