@@ -162,7 +162,7 @@ public class GameBoard extends JFrame{
 		
 		ImageIcon img = new ImageIcon();
 		if (s == "SPADES") img = SPADES[r-1];
-		else if (s == "HEARTS") img = SPADES[r-1];
+		else if (s == "HEARTS") img = HEARTS[r-1];
 		else if (s == "DIAMONDS") img = DIAMONDS[r-1];
 		else if (s == "CLUBS") img = CLUBS[r-1];
 		
