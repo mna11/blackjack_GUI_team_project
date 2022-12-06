@@ -58,4 +58,30 @@ public abstract class CardPlayer implements CardPlayerBehavior {
 		}
 		return score;
 	}
+	
+	/**
+	 * 첫 카드를 제외한 점수를 더해서 리턴함
+	 * @return totalScore() - 첫 카드
+	 */
+	public int nFirstTotalScore() {
+		int score = 0;
+		int count_ace = 0;
+		int rank;
+		for (int i = 1; i < card_count; i++) {
+			rank = hand[i].getRank();
+			if (rank == Card.ACE) {
+				score += 11;
+				count_ace += 1;
+			}
+			else if (rank == Card.JACK || rank == Card.QUEEN || rank == Card.KING)
+				score += 10;
+			else
+				score += rank;
+		}
+		while (score > 21 && count_ace > 0) {
+			score -= 10;
+			count_ace -= 1;
+		}
+		return score;
+	}
 }

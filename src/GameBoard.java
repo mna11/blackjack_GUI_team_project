@@ -123,16 +123,16 @@ public class GameBoard extends JFrame{
 	
 	public void update() {
 		Card[] hCD = humanPlayer.showCards();
+		Card[] cCD = computerPlayer.showCards();
 		int cnt = hCD.length == 2 ? 1 : 2; //처음 배부했을 때는 length가 2이므로 1로 해준다.
+		
+		if (cnt == 1) {
+			ImageIcon img = cardMatchImg(cCD[1]);
+			cShowCard[1].setIcon(img);
+			cScoreBoard.setText("딜러 현 점수(첫 카드 미포함): " + computerPlayer.nFirstTotalScore());
+		}
 		for (int i = hCD.length-1; cnt >= 0; i--) {
-			String s = hCD[i].getSuit();
-			int r = hCD[i].getRank();
-			
-			ImageIcon img = new ImageIcon();
-			if (s == "SPADES") img = SPADES[r-1];
-			else if (s == "HEARTS") img = SPADES[r-1];
-			else if (s == "DIAMONDS") img = DIAMONDS[r-1];
-			else if (s == "CLUBS") img = CLUBS[r-1];
+			ImageIcon img = cardMatchImg(hCD[i]);
 			pShowCard[cnt--].setIcon(img);
 		}
 		pScoreBoard.setText("플레이어 현 점수: " + humanPlayer.totalScore());
@@ -149,6 +149,24 @@ public class GameBoard extends JFrame{
 		if (hPScore < 21) return 0;
 		else if (hPScore == 21) return 1;
 		else return 2; 
+	}
+	
+	/**
+	 * 카드 객체를 넣으면 알맞는 카드 이미지를 찾아 이미지 아이콘을 리턴해줌
+	 * @param c 이미지를 찾고 싶은 카드 객체
+	 * @return 카드 객체에 맞는 이미지 아이콘
+	 */
+	private ImageIcon cardMatchImg(Card c) {
+		String s = c.getSuit();
+		int r = c.getRank();
+		
+		ImageIcon img = new ImageIcon();
+		if (s == "SPADES") img = SPADES[r-1];
+		else if (s == "HEARTS") img = SPADES[r-1];
+		else if (s == "DIAMONDS") img = DIAMONDS[r-1];
+		else if (s == "CLUBS") img = CLUBS[r-1];
+		
+		return img;
 	}
 	
 	/**
