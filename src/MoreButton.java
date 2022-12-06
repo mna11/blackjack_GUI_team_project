@@ -5,12 +5,17 @@ public class MoreButton extends JButton implements ActionListener{
 	Dealer dealer;
 	HumanPlayer humanPlayer;
 	
-	public MoreButton(String buttonName, Dealer d, HumanPlayer humanplayer, GameBoard f) {
+	public MoreButton(String buttonName, Dealer d, HumanPlayer hP, GameBoard f) {
 		super(buttonName);
+		gameBoard = f;
+		dealer = d;
+		humanPlayer = hP;
+		addActionListener(this);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		
+		dealer.dealOneTo(humanPlayer);
+		gameBoard.update();
 	}
 
 }

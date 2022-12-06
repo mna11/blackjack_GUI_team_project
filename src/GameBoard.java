@@ -53,11 +53,11 @@ public class GameBoard extends JFrame{
 		
 		//cCardPanel 설정
 		cCardPanel.setLayout(new GridLayout(1,3));
-		for (JLabel cSCard : cShowCard) {
-			cSCard = new JLabel();
-			cSCard.setIcon(imageIconImageSetSize(new ImageIcon("./card_image/DEFAULT1.jpg"), 
+		for (int i = 0; i < 3; i++) {
+			cShowCard[i] = new JLabel();
+			cShowCard[i].setIcon(imageIconImageSetSize(new ImageIcon("./card_image/DEFAULT1.jpg"), 
 					cardWidth, cardHeight));
-			cCardPanel.add(cSCard);
+			cCardPanel.add(cShowCard[i]);
 		}
 		
 		//southPanel에 추가
@@ -84,11 +84,11 @@ public class GameBoard extends JFrame{
 		
 		//pCardPanel 설정
 		pCardPanel.setLayout(new GridLayout(1,3));
-		for (JLabel pSCard : pShowCard) {
-			pSCard = new JLabel();
-			pSCard.setIcon(imageIconImageSetSize(new ImageIcon("./card_image/DEFAULT2.jpg"), 
+		for (int i = 0; i < 3; i++) {
+			pShowCard[i] = new JLabel();
+			pShowCard[i].setIcon(imageIconImageSetSize(new ImageIcon("./card_image/DEFAULT2.jpg"), 
 					cardWidth, cardHeight));
-			pCardPanel.add(pSCard);
+			pCardPanel.add(pShowCard[i]);
 		}
 		
 		//northPanel에 추가
@@ -110,6 +110,7 @@ public class GameBoard extends JFrame{
 		
 		setTitle("BLACKJACK_GUI");
 		setSize(gameBoardWidth, gameBoardHeight);
+		update();
 		setVisible(true);
 		setLocationRelativeTo(null); //게임 화면 스크린 정중앙 위치
 		setResizable(false); //게임 화면 리사이즈 불가
@@ -121,7 +122,22 @@ public class GameBoard extends JFrame{
 	}
 	
 	public void update() {
-		
+		Card[] hCD = humanPlayer.showCards();
+		int cnt = hCD.length == 2 ? 1 : 2;
+		for (int i = hCD.length-1; cnt >= 0; i--) {
+			String s = hCD[i].getSuit();
+			int r = hCD[i].getRank();
+			
+			ImageIcon img = new ImageIcon();
+			if (s == "SPADES") img = SPADES[r-1];
+			else if (s == "HEARTS") img = SPADES[r-1];
+			else if (s == "DIAMONDS") img = DIAMONDS[r-1];
+			else if (s == "CLUBS") img = CLUBS[r-1];
+			pShowCard[cnt--].setIcon(img);
+		}
+		pScoreBoard.setText("플레이어 현 점수: " + humanPlayer.totalScore());
+		if (scoreCheck() == 1 || scoreCheck() == 2)
+			gameOver();
 	}
 	
 	/** 
@@ -129,7 +145,10 @@ public class GameBoard extends JFrame{
 	 * @return 속행가능: 0, 블랙잭: 1, 버스트: 2
 	 */
 	private int scoreCheck() {
-		return 0; //임시로 0을 리턴
+		int hPScore = humanPlayer.totalScore();
+		if (hPScore < 21) return 0;
+		else if (hPScore == 21) return 1;
+		else return 2; 
 	}
 	
 	/**
