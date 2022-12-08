@@ -194,6 +194,7 @@ public class GameBoard extends JFrame{
 		//test
 		humanPlayer.youWin();
 		setButtonEnable(false);
+		
 	}
 	
 	public void update() {
