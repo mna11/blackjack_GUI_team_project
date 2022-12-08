@@ -4,10 +4,13 @@ import javax.swing.*;
 public class HumanPlayer extends CardPlayer {
 	
 	private String name;	
-	private int chips = 0;
-
-	public HumanPlayer(int max_cards, String n) {
+	private int chips = 20;
+	private GameBoard gameBoard;
+	private int battingChip; 
+	
+	public HumanPlayer(int max_cards, String n, GameBoard gb) {
 		super(max_cards);
+		gameBoard = gb;
 		name = n;
 	}
 	
@@ -17,19 +20,29 @@ public class HumanPlayer extends CardPlayer {
 	}
 	
 	public void youWin() {
-		chips += 1;
+		battingChip = gameBoard.getBattingChip();
+		
+		chips += battingChip * 2;
+		gameBoard.setBattingChip(0);
 	}
 	
 	public void youWinBlackjack() {
-		chips += 2;
+		battingChip = gameBoard.getBattingChip();
+		
+		chips += battingChip*2 + 5;
+		gameBoard.setBattingChip(0);
 	}
 	
 	public void youLose() {
-		chips -= 1;
+		gameBoard.setBattingChip(0);
 	}
 	
 	public void youDraw() {
 		
+	}
+	
+	public void setChips(int n) {
+		chips = n;
 	}
 	
 	public int countChips() {

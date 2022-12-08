@@ -7,6 +7,9 @@ public class GameBoard extends JFrame{
 	private final int gameBoardWidth = 475;
 	private final int gameBoardHeight = 750;
 	private final int scoreBoardHeight = 75;
+	private final int chipBoardWidth = 225;
+	private final int chipBoardHeight = 75;
+	private final int battingChipBoardHeight = 400;
 	
 	private ImageIcon[] SPADES = new ImageIcon[13]; //SPADES[card.rank()-1] = card.rank()의 이미지 
 	private ImageIcon[] HEARTS = new ImageIcon[13];
@@ -14,15 +17,27 @@ public class GameBoard extends JFrame{
 	private ImageIcon[] CLUBS = new ImageIcon[13];
 	private JLabel pScoreBoard = new JLabel();
 	private JLabel cScoreBoard = new JLabel();
+	private JLabel pChipBoard = new JLabel();
+	private JLabel battingChipBoard = new JLabel();
 	private JLabel[] pShowCard = new JLabel[3];
 	private JLabel[] cShowCard = new JLabel[3];
+	
+	private MoreButton moreButton;
+	private StopButton stopButton;
+	private StartButton startButton;
+	private EndButton endButton;
+	private BattingUpButton battingUpButton;
+	private BattingDownButton battingDownButton;
 	
 	private HumanPlayer humanPlayer;
 	private ComputerPlayer computerPlayer;
 	private Dealer dealer;
 	
+	private boolean isPlaying = false;
+	private int battingChip;
+	
 	public GameBoard() {
-		humanPlayer = new HumanPlayer(11, "player");
+		humanPlayer = new HumanPlayer(11, "player", this);
 		computerPlayer = new ComputerPlayer(11);
 		dealer = new Dealer();
 		
@@ -34,13 +49,18 @@ public class GameBoard extends JFrame{
 		Container cp = getContentPane();
 		cp.setLayout(new BorderLayout());
 		
-		JPanel southPanel = new JPanel(); //southPanel안에 cScoreBoard와 cCardPanel이 들어감
+		Container board = new Container();
+		board.setLayout(new BorderLayout());
+		Container southCon = new Container(); //southPanel안에 cScoreBoard와 cCardPanel이 들어감
 		JPanel cCardPanel = new JPanel();
 		JPanel buttonPanel = new JPanel();
-		JPanel northPanel = new JPanel(); //northPanel안에 pScoreBoard와 pCardPanel이 들어감
+		Container northCon = new Container(); //northPanel안에 pScoreBoard와 pCardPanel이 들어감
 		JPanel pCardPanel = new JPanel();
+		Container eastCon = new Container(); //eastPanel안에 pChipsBoard와 battingPanel, sAeButtonPanel이 들어감
+		JPanel battingPanel = new JPanel();
+		JPanel sAeButtonPanel = new JPanel();
 		
-		southPanel.setLayout(new BorderLayout());
+		southCon.setLayout(new BorderLayout());
 		
 		//cScoreBoard 설정
 		cScoreBoard.setFont(new Font("", Font.BOLD, 18));
@@ -61,17 +81,17 @@ public class GameBoard extends JFrame{
 		}
 		
 		//southPanel에 추가
-		southPanel.add(cScoreBoard, BorderLayout.NORTH);
-		southPanel.add(cCardPanel, BorderLayout.CENTER);
+		southCon.add(cScoreBoard, BorderLayout.NORTH);
+		southCon.add(cCardPanel, BorderLayout.CENTER);
 		
 		//buttonPanel 설정 후 버튼 추가
 		buttonPanel.setLayout(new GridLayout(1, 2));
-		JButton moreButton = new MoreButton("MORE", dealer, humanPlayer, this);
-		JButton stopButton = new StopButton("STOP", this);
+		moreButton = new MoreButton("MORE", dealer, humanPlayer, this);
+		stopButton = new StopButton("STOP", this);
 		buttonPanel.add(moreButton);
 		buttonPanel.add(stopButton);
 		
-		northPanel.setLayout(new BorderLayout());
+		northCon.setLayout(new BorderLayout());
 		
 		//pScoreBoard 설정
 		pScoreBoard.setFont(new Font("", Font.BOLD, 18));
@@ -92,12 +112,62 @@ public class GameBoard extends JFrame{
 		}
 		
 		//northPanel에 추가
-		northPanel.add(pScoreBoard, BorderLayout.SOUTH);
-		northPanel.add(pCardPanel, BorderLayout.CENTER);
+		northCon.add(pScoreBoard, BorderLayout.SOUTH);
+		northCon.add(pCardPanel, BorderLayout.CENTER);
 		
-		cp.add(southPanel, BorderLayout.NORTH);
-		cp.add(buttonPanel, BorderLayout.CENTER);
-		cp.add(northPanel, BorderLayout.SOUTH);
+		eastCon.setLayout(new BorderLayout());
+		
+		//pChipBoard 설정
+		pChipBoard.setFont(new Font("", Font.BOLD, 18));
+		pChipBoard.setForeground(Color.WHITE);
+		pChipBoard.setText("현재 보유한 칩:" + humanPlayer.countChips());
+		pChipBoard.setHorizontalTextPosition(pChipBoard.CENTER);
+		pChipBoard.setIconTextGap(-chipBoardWidth);
+		pChipBoard.setIcon(imageIconImageSetSize(new ImageIcon("./card_image/BATTING_BACKGROUND.jpg")
+				, chipBoardWidth, chipBoardHeight));
+		
+		//start 버튼과 end 버튼 패널 설정 및 버튼 설정
+		sAeButtonPanel.setLayout(new GridLayout(1,2));
+		startButton = new StartButton("START", this, battingChipBoard);
+		endButton = new EndButton("END");
+		startButton.setPreferredSize(new Dimension(chipBoardWidth/2, scoreBoardHeight));
+		endButton.setPreferredSize(new Dimension(chipBoardWidth/2, scoreBoardHeight));
+		sAeButtonPanel.add(startButton);
+		sAeButtonPanel.add(endButton);
+		
+		battingPanel.setLayout(new BorderLayout());
+		
+		//battingChipBoard 설정
+		battingChipBoard.setFont(new Font("", Font.BOLD, 30));
+		battingChipBoard.setForeground(Color.WHITE);
+		battingChipBoard.setText("0");
+		battingChipBoard.setHorizontalTextPosition(battingChipBoard.CENTER);
+		battingChipBoard.setIconTextGap(-chipBoardWidth);
+		battingChipBoard.setIcon(imageIconImageSetSize(new ImageIcon("./card_image/BATTING_BACKGROUND.jpg")
+				, chipBoardWidth, battingChipBoardHeight));
+		
+		//up버튼과 down버튼 설정
+		battingUpButton = new BattingUpButton("UP", battingChipBoard, humanPlayer);
+		battingDownButton = new BattingDownButton("DOWN", battingChipBoard);
+		battingUpButton.setPreferredSize(new Dimension(chipBoardWidth/2, (gameBoardHeight - (scoreBoardHeight*2 + battingChipBoardHeight))/2));
+		battingDownButton.setPreferredSize(new Dimension(chipBoardWidth/2, (gameBoardHeight - (scoreBoardHeight*2 + battingChipBoardHeight))/2));
+		
+		//battingPanel에 추가
+		battingPanel.add(battingChipBoard, BorderLayout.CENTER);
+		battingPanel.add(battingUpButton, BorderLayout.NORTH);
+		battingPanel.add(battingDownButton, BorderLayout.SOUTH);
+		
+		//eastPanel에 추가
+		eastCon.add(pChipBoard, BorderLayout.NORTH);
+		eastCon.add(battingPanel, BorderLayout.CENTER);
+		eastCon.add(sAeButtonPanel, BorderLayout.SOUTH);
+		
+		board.add(southCon, BorderLayout.NORTH);
+		board.add(buttonPanel, BorderLayout.CENTER);
+		board.add(northCon, BorderLayout.SOUTH);
+		
+		cp.add(board, BorderLayout.CENTER);
+		cp.add(eastCon, BorderLayout.EAST);
 		
 		//2장씩 나눠주고 시작
 		//플레이어가 블랙잭인 경우 바로 gameOver()로 감
@@ -109,16 +179,18 @@ public class GameBoard extends JFrame{
 			gameOver();
 		
 		setTitle("BLACKJACK_GUI");
-		setSize(gameBoardWidth, gameBoardHeight);
+		setSize(gameBoardWidth+chipBoardWidth, gameBoardHeight);
 		update();
+		buttonEnableSet();
 		setVisible(true);
 		setLocationRelativeTo(null); //게임 화면 스크린 정중앙 위치
-		setResizable(false); //게임 화면 리사이즈 불가
+		//setResizable(false); //게임 화면 리사이즈 불가
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 	
 	public void gameOver() {
-		
+		humanPlayer.youWin();
+		setButtonEnable(false);
 	}
 	
 	public void update() {
@@ -138,6 +210,32 @@ public class GameBoard extends JFrame{
 		pScoreBoard.setText("플레이어 현 점수: " + humanPlayer.totalScore());
 		if (scoreCheck() == 1 || scoreCheck() == 2)
 			gameOver();
+	}
+	
+	public void setBattingChip(int n) {
+		battingChip = n;
+		int chips = humanPlayer.countChips();
+		humanPlayer.setChips(chips - n);
+		pChipBoard.setText("현재 보유한 칩:" + humanPlayer.countChips());
+		battingChipBoard.setText(Integer.toString(n));
+	}
+	
+	public int getBattingChip() {
+		return battingChip;
+	}
+	
+	public void setButtonEnable(boolean b) {
+		isPlaying = b;
+		buttonEnableSet();
+	}
+	
+	private void buttonEnableSet() {
+		moreButton.setEnabled(isPlaying);
+		stopButton.setEnabled(isPlaying);
+		startButton.setEnabled(!isPlaying);
+		endButton.setEnabled(!isPlaying);
+		battingUpButton.setEnabled(!isPlaying);
+		battingDownButton.setEnabled(!isPlaying);
 	}
 	
 	/** 
