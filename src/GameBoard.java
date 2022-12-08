@@ -162,10 +162,12 @@ public class GameBoard extends JFrame{
 		eastCon.add(battingPanel, BorderLayout.CENTER);
 		eastCon.add(sAeButtonPanel, BorderLayout.SOUTH);
 		
+		//board에 추가
 		board.add(southCon, BorderLayout.NORTH);
 		board.add(buttonPanel, BorderLayout.CENTER);
 		board.add(northCon, BorderLayout.SOUTH);
 		
+		//cp에 추가
 		cp.add(board, BorderLayout.CENTER);
 		cp.add(eastCon, BorderLayout.EAST);
 		
@@ -184,11 +186,12 @@ public class GameBoard extends JFrame{
 		buttonEnableSet();
 		setVisible(true);
 		setLocationRelativeTo(null); //게임 화면 스크린 정중앙 위치
-		//setResizable(false); //게임 화면 리사이즈 불가
+		setResizable(false); //게임 화면 리사이즈 불가
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 	
 	public void gameOver() {
+		//test
 		humanPlayer.youWin();
 		setButtonEnable(false);
 	}
@@ -220,15 +223,28 @@ public class GameBoard extends JFrame{
 		battingChipBoard.setText(Integer.toString(n));
 	}
 	
+	/**
+	 * 배팅칩의 개수를 반환
+	 * @return 배팅칩의 개수를 반환
+	 */
 	public int getBattingChip() {
 		return battingChip;
 	}
 	
+	/**
+	 * isPlaying 값을 바꾸고 buttonEnableSet()을 실행함
+	 * @param b isPlaying값을 세팅할 boolean값
+	 */
 	public void setButtonEnable(boolean b) {
 		isPlaying = b;
 		buttonEnableSet();
 	}
 	
+	/**
+	 * isPlaying에 따라 버튼이 활성화 상태가 변함
+	 * more, stop은 게임 실행 중 사용하므로 isPlaying에 따라
+	 * start, end, up, down은 배팅 시간에 사용하므로 !isPlaying
+	 */
 	private void buttonEnableSet() {
 		moreButton.setEnabled(isPlaying);
 		stopButton.setEnabled(isPlaying);
