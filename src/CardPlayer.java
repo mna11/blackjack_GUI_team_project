@@ -2,6 +2,7 @@
 public abstract class CardPlayer implements CardPlayerBehavior {
 	
 	private Card[] hand; // 갖고 있는 카드 
+	//임시 
 	private int card_count; // 갖고 있는 카드의 장 수 
 	
 	/** Constructor CardPlayer - max_cards 카드를 수용가능한 Card 배열 객체를 만들어 CardPlayer 생성 
@@ -26,6 +27,11 @@ public abstract class CardPlayer implements CardPlayerBehavior {
 		}
 		else
 			return false;	
+	}
+	
+	public void cardSetup(int max_cards) {
+		hand = new Card[max_cards];
+		card_count = 0;
 	}
 	
 	/** showCards - 들고 있는 카드를 내준다. 
@@ -67,6 +73,7 @@ public abstract class CardPlayer implements CardPlayerBehavior {
 		int score = 0;
 		int count_ace = 0;
 		int rank;
+		System.out.println(card_count);
 		for (int i = 1; i < card_count; i++) {
 			rank = hand[i].getRank();
 			if (rank == Card.ACE) {

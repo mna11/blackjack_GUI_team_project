@@ -173,16 +173,11 @@ public class GameBoard extends JFrame{
 		
 		//2장씩 나눠주고 시작
 		//플레이어가 블랙잭인 경우 바로 gameOver()로 감
-		dealer.dealOneTo(humanPlayer);
-		dealer.dealOneTo(computerPlayer);
-		dealer.dealOneTo(humanPlayer);
-		dealer.dealOneTo(computerPlayer);
-		if (scoreCheck() == 1)
-			gameOver();
+		init();
 		
 		setTitle("BLACKJACK_GUI");
 		setSize(gameBoardWidth+chipBoardWidth, gameBoardHeight);
-		update();
+		
 		buttonEnableSet();
 		setVisible(true);
 		setLocationRelativeTo(null); //게임 화면 스크린 정중앙 위치
@@ -190,42 +185,79 @@ public class GameBoard extends JFrame{
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 	
+	public void init() {
+		
+		for (int i = 0; i < 3; i++) {
+			cShowCard[i].setIcon(imageIconImageSetSize(new ImageIcon("./card_image/DEFAULT1.jpg"), 
+					cardWidth, cardHeight));
+		}
+		for (int i = 0; i < 3; i++) {
+			pShowCard[i].setIcon(imageIconImageSetSize(new ImageIcon("./card_image/DEFAULT2.jpg"), 
+					cardWidth, cardHeight));
+		}
+		
+		humanPlayer.cardSetup(11);
+		computerPlayer.cardSetup(11);
+		dealer.dealOneTo(humanPlayer);
+		dealer.dealOneTo(computerPlayer);
+		dealer.dealOneTo(humanPlayer);
+		dealer.dealOneTo(computerPlayer);
+		update();
+		
+	}
+	
+	
 	public void gameOver() {
-	      Card[] cCD2 = computerPlayer.showCards();
-	      int cnt2 = 1;
-	      for (int i = cCD2.length-1; cnt2 >= 0; i--) {
-	         ImageIcon img = cardMatchImg(cCD2[i]);
-	         cShowCard[cnt2--].setIcon(img);
-	      }
-	      cScoreBoard.setText("딜러 현 점수: " + computerPlayer.totalScore());
-	      
+		  cCardSetup(1);
 	      while(computerPlayer.totalScore() <= 16) {
-	         dealer.dealOneTo(computerPlayer);
-	         int cnt = 2;
-	         Card[] cCD3 = computerPlayer.showCards();
-	         for (int i = cCD3.length-1; cnt >= 0; i--) {
-	            ImageIcon img = cardMatchImg(cCD3[i]);
-	            cShowCard[cnt--].setIcon(img);
-	         }
-	         System.out.println(computerPlayer.totalScore());
-	         cScoreBoard.setText("딜러 현 점수: " + computerPlayer.totalScore());
-	         delay(500);
+	    	 cCardSetup(2);
 	      }
 	      
-	      if(computerPlayer.totalScore() > 21) {
-	         cScoreBoard.setText("딜러 버스트: " + computerPlayer.totalScore());
+	      if (humanPlayer.totalScore() == 21) {
+	    	  pScoreBoard.setText("블랙잭!: " + "(" + humanPlayer.totalScore() + ":" + computerPlayer.totalScore() + ")");
+	    	  humanPlayer.youWinBlackjack();
+	    	  stopButton.setIsFirst(false);
 	      }
-	      else if(humanPlayer.totalScore()>21) {
-	         pScoreBoard.setText("플레이어 버스트: " + humanPlayer.totalScore());
+	      
+	      else if(humanPlayer.totalScore() > 21) {
+	         pScoreBoard.setText("플레이어 버스트: " + "(" + humanPlayer.totalScore() + ":" + computerPlayer.totalScore() + ")");
+	         humanPlayer.youLose();
+	         stopButton.setIsFirst(false);
+	      }
+	      else if(computerPlayer.totalScore()>21) {
+	    	  pScoreBoard.setText("딜러 버스트: " + "(" + humanPlayer.totalScore() + ":" + computerPlayer.totalScore() + ")");
+	         humanPlayer.youWin();
 	      }
 	      else if(humanPlayer.totalScore() > computerPlayer.totalScore()) {
-	         pScoreBoard.setText("플레이어 승리: " + humanPlayer.totalScore());
+	    	  pScoreBoard.setText("플레이어 승리: " + "(" + humanPlayer.totalScore() + ":" + computerPlayer.totalScore() + ")");
+	         humanPlayer.youWin();
 	      }
 	      else if(humanPlayer.totalScore() < computerPlayer.totalScore()) {
-	         cScoreBoard.setText("딜러 승리: " + computerPlayer.totalScore());
+	    	 pScoreBoard.setText("딜러 승리: " + "(" + humanPlayer.totalScore() + ":" + computerPlayer.totalScore() + ")");
+	         humanPlayer.youLose();
 	      }
+	      else if (humanPlayer.totalScore() == computerPlayer.totalScore()) {
+	    	 pScoreBoard.setText("무승부: " + "(" + humanPlayer.totalScore() + ":" + computerPlayer.totalScore() + ")");
+		
+		     humanPlayer.youDraw();
+	      }
+	      cScoreBoard.setText("새 게임을 시작하시려면 STOP 버튼을 누르세요");
+	      moreButton.setEnabled(false);
 	   }
 	
+	
+	private void cCardSetup(int n) {
+		int cnt = n;
+		if (cnt != 1)
+			dealer.dealOneTo(computerPlayer);
+        
+        Card[] cCD = computerPlayer.showCards();
+        for (int i = cCD.length-1; cnt >= 0; i--) {
+           ImageIcon img = cardMatchImg(cCD[i]);
+           cShowCard[cnt--].setIcon(img);
+        }
+        cScoreBoard.setText("딜러 현 점수: " + computerPlayer.totalScore());
+	}
 	
 	public void update() {
 		Card[] hCD = humanPlayer.showCards();
@@ -236,14 +268,26 @@ public class GameBoard extends JFrame{
 			ImageIcon img = cardMatchImg(cCD[1]);
 			cShowCard[1].setIcon(img);
 			cScoreBoard.setText("딜러 현 점수(첫 카드 미포함): " + computerPlayer.nFirstTotalScore());
+			ImageIcon img2 = cardMatchImg(hCD[1]);
+			pShowCard[1].setIcon(img2);
+			pScoreBoard.setText("플레이어 현 점수(배팅 후 2장 공개): " + humanPlayer.nFirstTotalScore());
 		}
-		for (int i = hCD.length-1; cnt >= 0; i--) {
-			ImageIcon img = cardMatchImg(hCD[i]);
-			pShowCard[cnt--].setIcon(img);
+		else {
+			for (int i = hCD.length-1; cnt >= 0; i--) {
+				ImageIcon img = cardMatchImg(hCD[i]);
+				pShowCard[cnt--].setIcon(img);
+			}
+			pScoreBoard.setText("플레이어 현 점수: " + humanPlayer.totalScore());
 		}
-		pScoreBoard.setText("플레이어 현 점수: " + humanPlayer.totalScore());
-		if (scoreCheck() == 1 || scoreCheck() == 2)
+		if (scoreCheck() == 2)
 			gameOver();
+	}
+	
+	public void showFirstHC() {
+		Card[] hCD = humanPlayer.showCards();
+		ImageIcon img = cardMatchImg(hCD[0]);
+		pShowCard[0].setIcon(img);
+		pScoreBoard.setText("플레이어 현 점수: " + humanPlayer.totalScore());
 	}
 	
 	public void setBattingChip(int n) {

@@ -3,6 +3,7 @@ import java.awt.event.*;
 
 public class StopButton extends JButton implements ActionListener{
 	private GameBoard gameBoard;
+	private boolean isFirst = true;
 	
 	public StopButton(String buttonName, GameBoard f) {
 		super(buttonName);
@@ -11,7 +12,18 @@ public class StopButton extends JButton implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		gameBoard.gameOver();
+		if (isFirst) {
+			isFirst = false;
+			gameBoard.gameOver();
+		}
+		else {
+			gameBoard.setButtonEnable(false);
+			gameBoard.init();
+			isFirst = true;
+		}
 	}
 	
+	public void setIsFirst(boolean b) {
+		isFirst = b;
+	}
 }
