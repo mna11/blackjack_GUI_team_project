@@ -6,10 +6,12 @@ public class StopButton extends JButton implements ActionListener{
 	
 	public StopButton(String buttonName, GameBoard f) {
 		super(buttonName);
+		gameBoard = f;
+		addActionListener(this);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		
+		gameBoard.gameOver();
 	}
 	
 }

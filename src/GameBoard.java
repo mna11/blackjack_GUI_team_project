@@ -191,11 +191,41 @@ public class GameBoard extends JFrame{
 	}
 	
 	public void gameOver() {
-		//test
-		humanPlayer.youWin();
-		setButtonEnable(false);
-		
-	}
+	      Card[] cCD2 = computerPlayer.showCards();
+	      int cnt2 = 1;
+	      for (int i = cCD2.length-1; cnt2 >= 0; i--) {
+	         ImageIcon img = cardMatchImg(cCD2[i]);
+	         cShowCard[cnt2--].setIcon(img);
+	      }
+	      cScoreBoard.setText("딜러 현 점수: " + computerPlayer.totalScore());
+	      
+	      while(computerPlayer.totalScore() <= 16) {
+	         dealer.dealOneTo(computerPlayer);
+	         int cnt = 2;
+	         Card[] cCD3 = computerPlayer.showCards();
+	         for (int i = cCD3.length-1; cnt >= 0; i--) {
+	            ImageIcon img = cardMatchImg(cCD3[i]);
+	            cShowCard[cnt--].setIcon(img);
+	         }
+	         System.out.println(computerPlayer.totalScore());
+	         cScoreBoard.setText("딜러 현 점수: " + computerPlayer.totalScore());
+	         delay(500);
+	      }
+	      
+	      if(computerPlayer.totalScore() > 21) {
+	         cScoreBoard.setText("딜러 버스트: " + computerPlayer.totalScore());
+	      }
+	      else if(humanPlayer.totalScore()>21) {
+	         pScoreBoard.setText("플레이어 버스트: " + humanPlayer.totalScore());
+	      }
+	      else if(humanPlayer.totalScore() > computerPlayer.totalScore()) {
+	         pScoreBoard.setText("플레이어 승리: " + humanPlayer.totalScore());
+	      }
+	      else if(humanPlayer.totalScore() < computerPlayer.totalScore()) {
+	         cScoreBoard.setText("딜러 승리: " + computerPlayer.totalScore());
+	      }
+	   }
+	
 	
 	public void update() {
 		Card[] hCD = humanPlayer.showCards();
@@ -308,5 +338,13 @@ public class GameBoard extends JFrame{
 		Image tmp2 = tmp1.getScaledInstance(i, j, Image.SCALE_SMOOTH);
 		ImageIcon img = new ImageIcon(tmp2); 
 		return img;
+	}
+	
+	private void delay(int n) {
+		try {
+			Thread.sleep(n);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }
