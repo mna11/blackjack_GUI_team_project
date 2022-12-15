@@ -28,7 +28,6 @@ public class HumanPlayer extends CardPlayer {
 	
 	public void youWinBlackjack() {
 		battingChip = gameBoard.getBattingChip();
-		
 		chips += battingChip + 10;
 		gameBoard.setBattingChip(0);
 	}
@@ -38,7 +37,9 @@ public class HumanPlayer extends CardPlayer {
 	}
 	
 	public void youDraw() {
-		
+		battingChip = gameBoard.getBattingChip();
+		chips += battingChip;
+		gameBoard.setBattingChip(0);
 	}
 	
 	

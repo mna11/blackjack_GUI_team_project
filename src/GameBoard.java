@@ -213,12 +213,11 @@ public class GameBoard extends JFrame{
 	    	 cCardSetup(2);
 	      }
 	      
-	      if (humanPlayer.totalScore() == 21) {
+	      if (humanPlayer.totalScore() == 21 && computerPlayer.totalScore() != 21) {
 	    	  pScoreBoard.setText("블랙잭!: " + "(" + humanPlayer.totalScore() + ":" + computerPlayer.totalScore() + ")");
 	    	  humanPlayer.youWinBlackjack();
 	    	  stopButton.setIsFirst(false);
 	      }
-	      
 	      else if(humanPlayer.totalScore() > 21) {
 	         pScoreBoard.setText("플레이어 버스트: " + "(" + humanPlayer.totalScore() + ":" + computerPlayer.totalScore() + ")");
 	         humanPlayer.youLose();
@@ -238,7 +237,6 @@ public class GameBoard extends JFrame{
 	      }
 	      else if (humanPlayer.totalScore() == computerPlayer.totalScore()) {
 	    	 pScoreBoard.setText("무승부: " + "(" + humanPlayer.totalScore() + ":" + computerPlayer.totalScore() + ")");
-		
 		     humanPlayer.youDraw();
 	      }
 	      cScoreBoard.setText("새 게임을 시작하시려면 STOP 버튼을 누르세요");
@@ -359,8 +357,8 @@ public class GameBoard extends JFrame{
 	}
 	
 	/**
-	 * 무늬와 ImageIcon 배열을 받아서 배열에 사진을 넣어주는 메소드
-	 * @param cardSuits 카드의 무늬
+	 * 무늬와 ImageIcon 배열을 받아서 배열에 사진을 넣어주는 메소드 
+	 * @param cardSuits 카드의 무늬 
 	 * @param card ImageIcon 배열 
 	 */
 	private void cardImgSetUp(String cardSuits, ImageIcon card[]) {
@@ -382,13 +380,5 @@ public class GameBoard extends JFrame{
 		Image tmp2 = tmp1.getScaledInstance(i, j, Image.SCALE_SMOOTH);
 		ImageIcon img = new ImageIcon(tmp2); 
 		return img;
-	}
-	
-	private void delay(int n) {
-		try {
-			Thread.sleep(n);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 }

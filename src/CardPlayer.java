@@ -73,7 +73,6 @@ public abstract class CardPlayer implements CardPlayerBehavior {
 		int score = 0;
 		int count_ace = 0;
 		int rank;
-		System.out.println(card_count);
 		for (int i = 1; i < card_count; i++) {
 			rank = hand[i].getRank();
 			if (rank == Card.ACE) {
