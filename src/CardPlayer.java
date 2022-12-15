@@ -2,7 +2,6 @@
 public abstract class CardPlayer implements CardPlayerBehavior {
 	
 	private Card[] hand; // 갖고 있는 카드 
-	//임시 
 	private int card_count; // 갖고 있는 카드의 장 수 
 	
 	/** Constructor CardPlayer - max_cards 카드를 수용가능한 Card 배열 객체를 만들어 CardPlayer 생성 
@@ -16,6 +15,13 @@ public abstract class CardPlayer implements CardPlayerBehavior {
 	 * @return 카드를 받고 싶으면 true, 아니면 false */ 
 	public abstract boolean wantsACard();
 	
+	/**
+	 * 현재 갖고 있는 카드의 장 수를 반환한다.
+	 * @return card_count
+	 */
+	public int getCardCount() {
+		return card_count;
+	}
 	/** receiveCard - 카드를 한장 받는다. 한도(배열 hand의 크기)를 초과하면 받을 수 없다.
 	 * @param c - 카드
 	 * @return 성공적으로 받았으면 true, 그렇지 않으면 false */
@@ -29,6 +35,10 @@ public abstract class CardPlayer implements CardPlayerBehavior {
 			return false;	
 	}
 	
+	/**
+	 * 패 초기 설정
+	 * @param max_cards 최대 받을 수 있는 카드 수
+	 */
 	public void cardSetup(int max_cards) {
 		hand = new Card[max_cards];
 		card_count = 0;
@@ -43,6 +53,10 @@ public abstract class CardPlayer implements CardPlayerBehavior {
 		return card;
 	}
 	
+	/**
+	 * 패의 총 점수를 반환해줌 
+	 * @return 패의 총 점수
+	 */
 	public int totalScore() {
 		int score = 0;
 		int count_ace = 0;

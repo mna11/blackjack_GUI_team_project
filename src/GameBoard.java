@@ -32,13 +32,17 @@ public class GameBoard extends JFrame{
 	private HumanPlayer humanPlayer;
 	private ComputerPlayer computerPlayer;
 	private Dealer dealer;
+	private FileController fileController;
 	
+	private String playerName;
 	private boolean isPlaying = false;
 	private int battingChip;
 	
 	public GameBoard() {
-		humanPlayer = new HumanPlayer(11, "player", this);
+		playerName = JOptionPane.showInputDialog("플레이어 이름을 입력하십시오.");
+		humanPlayer = new HumanPlayer(11, playerName, this);
 		computerPlayer = new ComputerPlayer(11);
+		fileController = new FileController(humanPlayer);
 		dealer = new Dealer();
 		
 		cardImgSetUp("SPADES", SPADES);
@@ -120,7 +124,7 @@ public class GameBoard extends JFrame{
 		//pChipBoard 설정
 		pChipBoard.setFont(new Font("", Font.BOLD, 18));
 		pChipBoard.setForeground(Color.WHITE);
-		pChipBoard.setText("현재 보유한 칩:" + humanPlayer.countChips());
+		pChipBoard.setText("현재 보유한 칩:" + humanPlayer.getChip());
 		pChipBoard.setHorizontalTextPosition(pChipBoard.CENTER);
 		pChipBoard.setIconTextGap(-chipBoardWidth);
 		pChipBoard.setIcon(imageIconImageSetSize(new ImageIcon("./card_image/BATTING_BACKGROUND.jpg")
@@ -129,7 +133,7 @@ public class GameBoard extends JFrame{
 		//start 버튼과 end 버튼 패널 설정 및 버튼 설정
 		sAeButtonPanel.setLayout(new GridLayout(1,2));
 		startButton = new StartButton("START", this, battingChipBoard);
-		endButton = new EndButton("END");
+		endButton = new EndButton("END", this);
 		startButton.setPreferredSize(new Dimension(chipBoardWidth/2, scoreBoardHeight));
 		endButton.setPreferredSize(new Dimension(chipBoardWidth/2, scoreBoardHeight));
 		sAeButtonPanel.add(startButton);
@@ -185,6 +189,9 @@ public class GameBoard extends JFrame{
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 	
+	/**
+	 * 플레이 초기 설정을 해준다.
+	 */
 	public void init() {
 		
 		for (int i = 0; i < 3; i++) {
@@ -206,15 +213,16 @@ public class GameBoard extends JFrame{
 		
 	}
 	
-	
+	/**
+	 * 게임이 종료되었을 때, 승패 판정을 해준다.
+	 */
 	public void gameOver() {
 		  cCardSetup(1);
 	      while(computerPlayer.totalScore() <= 16) {
 	    	 cCardSetup(2);
 	      }
-	      
-	      if (humanPlayer.totalScore() == 21 && computerPlayer.totalScore() != 21) {
-	    	  pScoreBoard.setText("블랙잭!: " + "(" + humanPlayer.totalScore() + ":" + computerPlayer.totalScore() + ")");
+	      if (humanPlayer.totalScore() == 21 && humanPlayer.getCardCount() == 2) {
+	    	  pScoreBoard.setText("블랙잭!");
 	    	  humanPlayer.youWinBlackjack();
 	    	  stopButton.setIsFirst(false);
 	      }
@@ -223,7 +231,7 @@ public class GameBoard extends JFrame{
 	         humanPlayer.youLose();
 	         stopButton.setIsFirst(false);
 	      }
-	      else if(computerPlayer.totalScore()>21) {
+	      else if(computerPlayer.totalScore() > 21) {
 	    	  pScoreBoard.setText("딜러 버스트: " + "(" + humanPlayer.totalScore() + ":" + computerPlayer.totalScore() + ")");
 	         humanPlayer.youWin();
 	      }
@@ -241,9 +249,21 @@ public class GameBoard extends JFrame{
 	      }
 	      cScoreBoard.setText("새 게임을 시작하시려면 STOP 버튼을 누르세요");
 	      moreButton.setEnabled(false);
+	      endButton.setEnabled(true);
 	   }
 	
+	/**
+	 * EndButton이 눌렸을 때, 호출되며 fileController의 EndSoWrite를 호출한다.
+	 */
+	public void pressEnd() {
+		fileController.EndSoWrite();
+		System.exit(1);
+	}
 	
+	/**
+	 * computer Card의 공개 상태를 바꾼다.
+	 * @param n 보여주고 싶은 카드 개수 - 1;
+	 */
 	private void cCardSetup(int n) {
 		int cnt = n;
 		if (cnt != 1)
@@ -257,6 +277,9 @@ public class GameBoard extends JFrame{
         cScoreBoard.setText("딜러 현 점수: " + computerPlayer.totalScore());
 	}
 	
+	/**
+	 * more버튼을 눌렀을 때 호출됨, 플레이어 card의 공개 상태를 변경한다.
+	 */
 	public void update() {
 		Card[] hCD = humanPlayer.showCards();
 		Card[] cCD = computerPlayer.showCards();
@@ -281,6 +304,9 @@ public class GameBoard extends JFrame{
 			gameOver();
 	}
 	
+	/**
+	 * 플레이어 카드를 한장만 공개하게 한다.
+	 */
 	public void showFirstHC() {
 		Card[] hCD = humanPlayer.showCards();
 		ImageIcon img = cardMatchImg(hCD[0]);
@@ -288,11 +314,15 @@ public class GameBoard extends JFrame{
 		pScoreBoard.setText("플레이어 현 점수: " + humanPlayer.totalScore());
 	}
 	
+	/**
+	 * 배팅칩을 플레이어 실제 칩에 적용한다.
+	 * @param n
+	 */
 	public void setBattingChip(int n) {
 		battingChip = n;
-		int chips = humanPlayer.countChips();
-		humanPlayer.setChips(chips - n);
-		pChipBoard.setText("현재 보유한 칩:" + humanPlayer.countChips());
+		int chips = humanPlayer.getChip();
+		humanPlayer.setChip(chips - n);
+		pChipBoard.setText("현재 보유한 칩:" + humanPlayer.getChip());
 		battingChipBoard.setText(Integer.toString(n));
 	}
 	
