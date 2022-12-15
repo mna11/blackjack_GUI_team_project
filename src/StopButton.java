@@ -18,7 +18,7 @@ public class StopButton extends JButton implements ActionListener{
 	
 	/**
 	 * 첫번째 눌렀을 때는 더 이상 카드를 받고싶지 않다는 의사표현,
-	 * 두번째 눌렀을 대는 새로운 게임을 다시 시작하겠다는 의사표현을 뜻한다.
+	 * 두번째 눌렀을 때는 새로운 게임을 다시 시작하겠다는 의사표현을 뜻한다.
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if (isFirst) {

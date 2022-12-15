@@ -261,23 +261,6 @@ public class GameBoard extends JFrame{
 	}
 	
 	/**
-	 * computer Card의 공개 상태를 바꾼다.
-	 * @param n 보여주고 싶은 카드 개수 - 1;
-	 */
-	private void cCardSetup(int n) {
-		int cnt = n;
-		if (cnt != 1)
-			dealer.dealOneTo(computerPlayer);
-        
-        Card[] cCD = computerPlayer.showCards();
-        for (int i = cCD.length-1; cnt >= 0; i--) {
-           ImageIcon img = cardMatchImg(cCD[i]);
-           cShowCard[cnt--].setIcon(img);
-        }
-        cScoreBoard.setText("딜러 현 점수: " + computerPlayer.totalScore());
-	}
-	
-	/**
 	 * more버튼을 눌렀을 때 호출됨, 플레이어 card의 공개 상태를 변경한다.
 	 */
 	public void update() {
@@ -341,6 +324,23 @@ public class GameBoard extends JFrame{
 	public void setButtonEnable(boolean b) {
 		isPlaying = b;
 		buttonEnableSet();
+	}
+	
+	/**
+	 * computer Card의 공개 상태를 바꾼다.
+	 * @param n 보여주고 싶은 카드 개수 - 1;
+	 */
+	private void cCardSetup(int n) {
+		int cnt = n;
+		if (cnt != 1)
+			dealer.dealOneTo(computerPlayer);
+        
+        Card[] cCD = computerPlayer.showCards();
+        for (int i = cCD.length-1; cnt >= 0; i--) {
+           ImageIcon img = cardMatchImg(cCD[i]);
+           cShowCard[cnt--].setIcon(img);
+        }
+        cScoreBoard.setText("딜러 현 점수: " + computerPlayer.totalScore());
 	}
 	
 	/**

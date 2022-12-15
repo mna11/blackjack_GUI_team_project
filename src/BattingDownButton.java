@@ -6,7 +6,7 @@ public class BattingDownButton extends JButton implements ActionListener {
 	/**
 	 * BattingDownButton 초기설정
 	 * @param buttonName 버튼 텍스트
-	 * @param b 배팅 스코어 라벨
+	 * @param b 배팅 칩 보드 라벨
 	 */
 	public BattingDownButton(String buttonName, JLabel b) {
 		super(buttonName);

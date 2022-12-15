@@ -7,7 +7,7 @@ public class BattingUpButton extends JButton implements ActionListener {
 	/**
 	 * BattingUpButton 초기설정
 	 * @param buttonName 버튼 텍스트
-	 * @param b 배팅 스코어 라벨
+	 * @param b 배팅 칩 보드 라벨
 	 * @param hp HumanPlayer 객체
 	 */
 	public BattingUpButton(String buttonName, JLabel b, HumanPlayer hp) {
