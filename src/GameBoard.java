@@ -288,13 +288,15 @@ public class GameBoard extends JFrame{
 	}
 	
 	/**
-	 * 플레이어 카드를 한장만 공개하게 한다.
+	 * 가려진 플레이어의 첫번째 카드를 공개하고 블랙잭 판단
 	 */
 	public void showFirstHC() {
 		Card[] hCD = humanPlayer.showCards();
 		ImageIcon img = cardMatchImg(hCD[0]);
 		pShowCard[0].setIcon(img);
 		pScoreBoard.setText("플레이어 현 점수: " + humanPlayer.totalScore());
+
+		if(scoreCheck() == 1) gameOver();
 	}
 	
 	/**

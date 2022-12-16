@@ -22,8 +22,8 @@ public class StartButton extends JButton implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		int n = Integer.parseInt(battingBoard.getText());
-		gameBoard.showFirstHC();
 		gameBoard.setButtonEnable(true);
 		gameBoard.setBattingChip(n);
+		gameBoard.showFirstHC();
 	}
 }
