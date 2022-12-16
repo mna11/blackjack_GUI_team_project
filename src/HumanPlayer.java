@@ -5,8 +5,8 @@ public class HumanPlayer extends CardPlayer {
 	
 	private String name = "";	
 	private int chip = 20;
-	private GameBoard gameBoard;
-	private int battingChip; 
+	private GameBoard game_board;
+	private int batting_chip; 
 	
 	/**
 	 * HumanPlayer 초기 설정
@@ -16,7 +16,7 @@ public class HumanPlayer extends CardPlayer {
 	 */
 	public HumanPlayer(int max_cards, String n, GameBoard gb) {
 		super(max_cards);
-		gameBoard = gb;
+		game_board = gb;
 		name = n;
 	}
 	
@@ -29,34 +29,34 @@ public class HumanPlayer extends CardPlayer {
 	 * 이겼을 때, 배팅칩의 2배로 돌려준다.
 	 */
 	public void youWin() {
-		battingChip = gameBoard.getBattingChip();
-		chip += battingChip * 2;
-		gameBoard.setBattingChip(0);
+		batting_chip = game_board.getBattingChip();
+		chip += batting_chip * 2;
+		game_board.setBattingChip(0);
 	}
 	
 	/**
 	 * 블랙잭인 경우, 배팅칩의 2배 + 10개로 돌려준다.
 	 */
 	public void youWinBlackjack() {
-		battingChip = gameBoard.getBattingChip();
-		chip += battingChip * 2 + 10;
-		gameBoard.setBattingChip(0);
+		batting_chip = game_board.getBattingChip();
+		chip += batting_chip * 2 + 10;
+		game_board.setBattingChip(0);
 	}
 	
 	/**
 	 * 진 경우, 배팅칩은 돌려주지 않는다.
 	 */
 	public void youLose() {
-		gameBoard.setBattingChip(0);
+		game_board.setBattingChip(0);
 	}
 	
 	/**
 	 * 비긴 경우, 배팅칩을 그대로 돌려준다.
 	 */
 	public void youDraw() {
-		battingChip = gameBoard.getBattingChip();
-		chip += battingChip;
-		gameBoard.setBattingChip(0);
+		batting_chip = game_board.getBattingChip();
+		chip += batting_chip;
+		game_board.setBattingChip(0);
 	}
 	
 	/**

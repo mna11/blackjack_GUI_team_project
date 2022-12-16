@@ -1,9 +1,9 @@
 public class Card {
 	
-	public static final String SPADES = "SPADES";
-	public static final String HEARTS = "HEARTS";
-	public static final String DIAMONDS = "DIAMONDS";
-	public static final String CLUBS = "CLUBS";
+	public static final String SPADES = "spades";
+	public static final String HEARTS = "hearts";
+	public static final String DIAMONDS = "diamonds";
+	public static final String CLUBS = "clubs";
 	
 	public static final int ACE = 1;
 	public static final int JACK = 11;

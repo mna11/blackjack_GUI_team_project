@@ -5,9 +5,9 @@ public class ReadFile {
 	private BufferedReader infile;
 	private final String EOF = "!";
 	private String file_name = "pData.csv";
-	private String pName;
-	private String pPassword;
-	private int pChip = -1;
+	private String p_name;
+	private String p_password;
+	private int p_chip = -1;
 	
 	/**
 	 * pData.csv를 연다.
@@ -25,7 +25,7 @@ public class ReadFile {
 	 * @return 현재 읽은 라인의 chip 개수
 	 */
 	public int getChip() {
-		return pChip;
+		return p_chip;
 	}
 	
 	/**
@@ -33,7 +33,7 @@ public class ReadFile {
 	 * @return 현재 읽은 라인의 password
 	 */
 	public String getPassword() {
-		return pPassword;
+		return p_password;
 	}
 	
 	/**
@@ -41,7 +41,7 @@ public class ReadFile {
 	 * @return 현재 읽은 라인의 플레이어 이름
 	 */
 	public String getName() {
-		return pName;
+		return p_name;
 	}
 	
 	/**
@@ -64,11 +64,11 @@ public class ReadFile {
             if (infile.ready()) {
                 String line = infile.readLine();
                 StringTokenizer t = new StringTokenizer(line, ",");
-                pName = t.nextToken().trim();
-                if (!pName.equals(EOF)) {
+                p_name = t.nextToken().trim();
+                if (!p_name.equals(EOF)) {
                     if (t.countTokens() == 2) {
-                    	pChip = Integer.parseInt(t.nextToken().trim());
-                    	pPassword = t.nextToken().trim();
+                    	p_chip = Integer.parseInt(t.nextToken().trim());
+                    	p_password = t.nextToken().trim();
                     	result = true;
                     }
                     else {

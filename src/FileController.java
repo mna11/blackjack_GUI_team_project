@@ -1,30 +1,30 @@
 import javax.swing.JOptionPane;
 
 public class FileController {
-	private HumanPlayer humanPlayer;
-	private String pName;
-	private String fileContents = "";
+	private HumanPlayer human_player;
+	private String p_name;
+	private String file_contents = "";
 	private int chip = 20;
 	private String password;
-	private boolean newPlayer = true;
+	private boolean new_player = true;
 	
 	/**
 	 * FileController가 만들어질때, 파일을 다 읽어오고, 비밀번호 체크도 해준다.
 	 * @param hp HumanPlayer 객체
 	 */
 	public FileController(HumanPlayer hp) {
-		humanPlayer = hp;
-		pName = humanPlayer.getName();
+		human_player = hp;
+		p_name = human_player.getName();
 		ReadFile reader = new ReadFile();
 		while(reader.getNextRecord()) {
-			if(pName.equals(reader.getName())) {
+			if(p_name.equals(reader.getName())) {
 				chip = reader.getChip();
 				password = reader.getPassword();
-				newPlayer = false;
+				new_player = false;
 			}
-			fileContents += reader.getName() + "," + reader.getChip() + "," + reader.getPassword() + "\n";
+			file_contents += reader.getName() + "," + reader.getChip() + "," + reader.getPassword() + "\n";
 		}
-		if (newPlayer) {
+		if (new_player) {
 			password = JOptionPane.showInputDialog("패스워드를 설정해주세요.");
 		}
 		else {
@@ -40,7 +40,7 @@ public class FileController {
 			}
 			JOptionPane.showMessageDialog(null, "확인되었습니다.");
 		}
-		humanPlayer.setChip(chip);
+		human_player.setChip(chip);
 		reader.close();
 	}
 	
@@ -49,20 +49,20 @@ public class FileController {
 	 */
 	public void EndSoWrite() {
 		WriteFile writer = new WriteFile();
-		chip = humanPlayer.getChip();
-		String[] line = fileContents.split("\n");
+		chip = human_player.getChip();
+		String[] line = file_contents.split("\n");
 		for (int i = 0; i < line.length; i++) {
 			if(line[i] == "") continue;
 			String[] contents = line[i].split(",");
-			if (contents[0].equals(pName)) {
-				writer.saveData(pName, chip, password);
+			if (contents[0].equals(p_name)) {
+				writer.saveData(p_name, chip, password);
 			}
 			else {
 				writer.saveData(contents[0], Integer.parseInt(contents[1]), contents[2]);
 			}
 		}
-		if (newPlayer) {
-			writer.saveData(pName, chip, password);
+		if (new_player) {
+			writer.saveData(p_name, chip, password);
 		}
 		writer.printCheck("!");
 		writer.close();

@@ -2,185 +2,185 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameBoard extends JFrame{
-	private final int cardWidth = 150;
-	private final int cardHeight = 250;
-	private final int gameBoardWidth = 475;
-	private final int gameBoardHeight = 750;
-	private final int scoreBoardHeight = 75;
-	private final int chipBoardWidth = 225;
-	private final int chipBoardHeight = 75;
-	private final int battingChipBoardHeight = 400;
+	private final int card_width = 150;
+	private final int card_height = 250;
+	private final int game_board_width = 475;
+	private final int game_board_height = 750;
+	private final int score_board_height = 75;
+	private final int chip_board_width = 225;
+	private final int chip_board_height = 75;
+	private final int battingchip_board_height = 400;
 	
-	private ImageIcon[] SPADES = new ImageIcon[13]; //SPADES[card.rank()-1] = card.rank()의 이미지 
-	private ImageIcon[] HEARTS = new ImageIcon[13];
-	private ImageIcon[] DIAMONDS = new ImageIcon[13];
-	private ImageIcon[] CLUBS = new ImageIcon[13];
-	private JLabel pScoreBoard = new JLabel();
-	private JLabel cScoreBoard = new JLabel();
-	private JLabel pChipBoard = new JLabel();
-	private JLabel battingChipBoard = new JLabel();
-	private JLabel[] pShowCard = new JLabel[3];
-	private JLabel[] cShowCard = new JLabel[3];
+	private ImageIcon[] spades = new ImageIcon[13]; //spades[card.rank()-1] = card.rank()의 이미지 
+	private ImageIcon[] hearts = new ImageIcon[13];
+	private ImageIcon[] diamonds = new ImageIcon[13];
+	private ImageIcon[] clubs = new ImageIcon[13];
+	private JLabel p_score_board = new JLabel();
+	private JLabel c_score_board = new JLabel();
+	private JLabel p_chip_board = new JLabel();
+	private JLabel battingchip_board = new JLabel();
+	private JLabel[] p_show_card = new JLabel[3];
+	private JLabel[] c_show_card = new JLabel[3];
 	
-	private MoreButton moreButton;
-	private StopButton stopButton;
+	private MoreButton more_button;
+	private StopButton stop_button;
 	private StartButton startButton;
-	private EndButton endButton;
-	private BattingUpButton battingUpButton;
-	private BattingDownButton battingDownButton;
+	private EndButton end_button;
+	private BattingUpButton batting_up_button;
+	private BattingDownButton batting_down_button;
 	
-	private HumanPlayer humanPlayer;
-	private ComputerPlayer computerPlayer;
+	private HumanPlayer human_player;
+	private ComputerPlayer computer_player;
 	private Dealer dealer;
-	private FileController fileController;
+	private FileController file_controller;
 	
-	private String playerName;
-	private boolean isPlaying = false;
-	private int battingChip;
+	private String player_name;
+	private boolean is_playing = false;
+	private int batting_chip;
 	
 	public GameBoard() {
-		playerName = JOptionPane.showInputDialog("플레이어 이름을 입력하십시오.");
-		humanPlayer = new HumanPlayer(11, playerName, this);
-		computerPlayer = new ComputerPlayer(11);
-		fileController = new FileController(humanPlayer);
+		player_name = JOptionPane.showInputDialog("플레이어 이름을 입력하십시오.");
+		human_player = new HumanPlayer(11, player_name, this);
+		computer_player = new ComputerPlayer(11);
+		file_controller = new FileController(human_player);
 		dealer = new Dealer();
 		
-		cardImgSetUp("SPADES", SPADES);
-		cardImgSetUp("HEARTS", HEARTS);
-		cardImgSetUp("DIAMONDS", DIAMONDS);
-		cardImgSetUp("CLUBS", CLUBS);
+		cardImgSetUp("spades", spades);
+		cardImgSetUp("hearts", hearts);
+		cardImgSetUp("diamonds", diamonds);
+		cardImgSetUp("clubs", clubs);
 		
 		Container cp = getContentPane();
 		cp.setLayout(new BorderLayout());
 		
 		Container board = new Container();
 		board.setLayout(new BorderLayout());
-		Container southCon = new Container(); //southPanel안에 cScoreBoard와 cCardPanel이 들어감
-		JPanel cCardPanel = new JPanel();
-		JPanel buttonPanel = new JPanel();
-		Container northCon = new Container(); //northPanel안에 pScoreBoard와 pCardPanel이 들어감
-		JPanel pCardPanel = new JPanel();
-		Container eastCon = new Container(); //eastPanel안에 pChipsBoard와 battingPanel, sAeButtonPanel이 들어감
-		JPanel battingPanel = new JPanel();
-		JPanel sAeButtonPanel = new JPanel();
+		Container south_con = new Container(); //south_con안에 c_score_board와 c_card_panel이 들어감
+		JPanel c_card_panel = new JPanel();
+		JPanel button_panel = new JPanel();
+		Container north_con = new Container(); //north_con안에 p_score_board와 p_card_panel이 들어감
+		JPanel p_card_panel = new JPanel();
+		Container east_con = new Container(); //east_con안에 pChipsBoard와 batting_panel, s_and_e_button_panel이 들어감
+		JPanel batting_panel = new JPanel();
+		JPanel s_and_e_button_panel = new JPanel();
 		
-		southCon.setLayout(new BorderLayout());
+		south_con.setLayout(new BorderLayout());
 		
-		//cScoreBoard 설정
-		cScoreBoard.setFont(new Font("", Font.BOLD, 18));
-		cScoreBoard.setForeground(Color.WHITE);
-		cScoreBoard.setText("딜러 현 점수(첫 카드 미포함): " + computerPlayer.totalScore());
-		cScoreBoard.setHorizontalTextPosition(cScoreBoard.CENTER);
-		cScoreBoard.setIconTextGap(-gameBoardWidth);
-		cScoreBoard.setIcon(imageIconImageSetSize(new ImageIcon("./card_image/SCORE_BACKGROUND.jpg")
-				, gameBoardWidth, scoreBoardHeight));
+		//c_score_board 설정
+		c_score_board.setFont(new Font("", Font.BOLD, 18));
+		c_score_board.setForeground(Color.WHITE);
+		c_score_board.setText("딜러 현 점수(첫 카드 미포함): " + computer_player.totalScore());
+		c_score_board.setHorizontalTextPosition(c_score_board.CENTER);
+		c_score_board.setIconTextGap(-game_board_width);
+		c_score_board.setIcon(imageIconImageSetSize(new ImageIcon("./card_image/SCORE_BACKGROUND.jpg")
+				, game_board_width, score_board_height));
 		
-		//cCardPanel 설정
-		cCardPanel.setLayout(new GridLayout(1,3));
+		//c_card_panel 설정
+		c_card_panel.setLayout(new GridLayout(1,3));
 		for (int i = 0; i < 3; i++) {
-			cShowCard[i] = new JLabel();
-			cShowCard[i].setIcon(imageIconImageSetSize(new ImageIcon("./card_image/DEFAULT1.jpg"), 
-					cardWidth, cardHeight));
-			cCardPanel.add(cShowCard[i]);
+			c_show_card[i] = new JLabel();
+			c_show_card[i].setIcon(imageIconImageSetSize(new ImageIcon("./card_image/DEFAULT1.jpg"), 
+					card_width, card_height));
+			c_card_panel.add(c_show_card[i]);
 		}
 		
-		//southPanel에 추가
-		southCon.add(cScoreBoard, BorderLayout.NORTH);
-		southCon.add(cCardPanel, BorderLayout.CENTER);
+		//south_con에 추가
+		south_con.add(c_score_board, BorderLayout.NORTH);
+		south_con.add(c_card_panel, BorderLayout.CENTER);
 		
-		//buttonPanel 설정 후 버튼 추가
-		buttonPanel.setLayout(new GridLayout(1, 2));
-		moreButton = new MoreButton("MORE", dealer, humanPlayer, this);
-		stopButton = new StopButton("STOP", this);
-		buttonPanel.add(moreButton);
-		buttonPanel.add(stopButton);
+		//button_panel 설정 후 버튼 추가
+		button_panel.setLayout(new GridLayout(1, 2));
+		more_button = new MoreButton("MORE", dealer, human_player, this);
+		stop_button = new StopButton("STOP", this);
+		button_panel.add(more_button);
+		button_panel.add(stop_button);
 		
-		northCon.setLayout(new BorderLayout());
+		north_con.setLayout(new BorderLayout());
 		
-		//pScoreBoard 설정
-		pScoreBoard.setFont(new Font("", Font.BOLD, 18));
-		pScoreBoard.setForeground(Color.WHITE);
-		pScoreBoard.setText("플레이어 현 점수: " + humanPlayer.totalScore());
-		pScoreBoard.setHorizontalTextPosition(pScoreBoard.CENTER);
-		pScoreBoard.setIconTextGap(-gameBoardWidth);
-		pScoreBoard.setIcon(imageIconImageSetSize(new ImageIcon("./card_image/SCORE_BACKGROUND.jpg")
-				, gameBoardWidth, scoreBoardHeight));
+		//p_score_board 설정
+		p_score_board.setFont(new Font("", Font.BOLD, 18));
+		p_score_board.setForeground(Color.WHITE);
+		p_score_board.setText("플레이어 현 점수: " + human_player.totalScore());
+		p_score_board.setHorizontalTextPosition(p_score_board.CENTER);
+		p_score_board.setIconTextGap(-game_board_width);
+		p_score_board.setIcon(imageIconImageSetSize(new ImageIcon("./card_image/SCORE_BACKGROUND.jpg")
+				, game_board_width, score_board_height));
 		
-		//pCardPanel 설정
-		pCardPanel.setLayout(new GridLayout(1,3));
+		//p_card_panel 설정
+		p_card_panel.setLayout(new GridLayout(1,3));
 		for (int i = 0; i < 3; i++) {
-			pShowCard[i] = new JLabel();
-			pShowCard[i].setIcon(imageIconImageSetSize(new ImageIcon("./card_image/DEFAULT2.jpg"), 
-					cardWidth, cardHeight));
-			pCardPanel.add(pShowCard[i]);
+			p_show_card[i] = new JLabel();
+			p_show_card[i].setIcon(imageIconImageSetSize(new ImageIcon("./card_image/DEFAULT2.jpg"), 
+					card_width, card_height));
+			p_card_panel.add(p_show_card[i]);
 		}
 		
-		//northPanel에 추가
-		northCon.add(pScoreBoard, BorderLayout.SOUTH);
-		northCon.add(pCardPanel, BorderLayout.CENTER);
+		//north_con에 추가
+		north_con.add(p_score_board, BorderLayout.SOUTH);
+		north_con.add(p_card_panel, BorderLayout.CENTER);
 		
-		eastCon.setLayout(new BorderLayout());
+		east_con.setLayout(new BorderLayout());
 		
-		//pChipBoard 설정
-		pChipBoard.setFont(new Font("", Font.BOLD, 18));
-		pChipBoard.setForeground(Color.WHITE);
-		pChipBoard.setText("현재 보유한 칩:" + humanPlayer.getChip());
-		pChipBoard.setHorizontalTextPosition(pChipBoard.CENTER);
-		pChipBoard.setIconTextGap(-chipBoardWidth);
-		pChipBoard.setIcon(imageIconImageSetSize(new ImageIcon("./card_image/BATTING_BACKGROUND.jpg")
-				, chipBoardWidth, chipBoardHeight));
+		//p_chip_board 설정
+		p_chip_board.setFont(new Font("", Font.BOLD, 18));
+		p_chip_board.setForeground(Color.WHITE);
+		p_chip_board.setText("현재 보유한 칩:" + human_player.getChip());
+		p_chip_board.setHorizontalTextPosition(p_chip_board.CENTER);
+		p_chip_board.setIconTextGap(-chip_board_width);
+		p_chip_board.setIcon(imageIconImageSetSize(new ImageIcon("./card_image/BATTING_BACKGROUND.jpg")
+				, chip_board_width, chip_board_height));
 		
 		//start 버튼과 end 버튼 패널 설정 및 버튼 설정
-		sAeButtonPanel.setLayout(new GridLayout(1,2));
-		startButton = new StartButton("START", this, battingChipBoard);
-		endButton = new EndButton("END", this);
-		startButton.setPreferredSize(new Dimension(chipBoardWidth/2, scoreBoardHeight));
-		endButton.setPreferredSize(new Dimension(chipBoardWidth/2, scoreBoardHeight));
-		sAeButtonPanel.add(startButton);
-		sAeButtonPanel.add(endButton);
+		s_and_e_button_panel.setLayout(new GridLayout(1,2));
+		startButton = new StartButton("START", this, battingchip_board);
+		end_button = new EndButton("END", this);
+		startButton.setPreferredSize(new Dimension(chip_board_width/2, score_board_height));
+		end_button.setPreferredSize(new Dimension(chip_board_width/2, score_board_height));
+		s_and_e_button_panel.add(startButton);
+		s_and_e_button_panel.add(end_button);
 		
-		battingPanel.setLayout(new BorderLayout());
+		batting_panel.setLayout(new BorderLayout());
 		
-		//battingChipBoard 설정
-		battingChipBoard.setFont(new Font("", Font.BOLD, 30));
-		battingChipBoard.setForeground(Color.WHITE);
-		battingChipBoard.setText("0");
-		battingChipBoard.setHorizontalTextPosition(battingChipBoard.CENTER);
-		battingChipBoard.setIconTextGap(-chipBoardWidth);
-		battingChipBoard.setIcon(imageIconImageSetSize(new ImageIcon("./card_image/BATTING_BACKGROUND.jpg")
-				, chipBoardWidth, battingChipBoardHeight));
+		//battingchip_board 설정
+		battingchip_board.setFont(new Font("", Font.BOLD, 30));
+		battingchip_board.setForeground(Color.WHITE);
+		battingchip_board.setText("0");
+		battingchip_board.setHorizontalTextPosition(battingchip_board.CENTER);
+		battingchip_board.setIconTextGap(-chip_board_width);
+		battingchip_board.setIcon(imageIconImageSetSize(new ImageIcon("./card_image/BATTING_BACKGROUND.jpg")
+				, chip_board_width, battingchip_board_height));
 		
 		//up버튼과 down버튼 설정
-		battingUpButton = new BattingUpButton("UP", battingChipBoard, humanPlayer);
-		battingDownButton = new BattingDownButton("DOWN", battingChipBoard);
-		battingUpButton.setPreferredSize(new Dimension(chipBoardWidth/2, (gameBoardHeight - (scoreBoardHeight*2 + battingChipBoardHeight))/2));
-		battingDownButton.setPreferredSize(new Dimension(chipBoardWidth/2, (gameBoardHeight - (scoreBoardHeight*2 + battingChipBoardHeight))/2));
+		batting_up_button = new BattingUpButton("UP", battingchip_board, human_player);
+		batting_down_button = new BattingDownButton("DOWN", battingchip_board);
+		batting_up_button.setPreferredSize(new Dimension(chip_board_width/2, (game_board_height - (score_board_height*2 + battingchip_board_height))/2));
+		batting_down_button.setPreferredSize(new Dimension(chip_board_width/2, (game_board_height - (score_board_height*2 + battingchip_board_height))/2));
 		
-		//battingPanel에 추가
-		battingPanel.add(battingChipBoard, BorderLayout.CENTER);
-		battingPanel.add(battingUpButton, BorderLayout.NORTH);
-		battingPanel.add(battingDownButton, BorderLayout.SOUTH);
+		//batting_panel에 추가
+		batting_panel.add(battingchip_board, BorderLayout.CENTER);
+		batting_panel.add(batting_up_button, BorderLayout.NORTH);
+		batting_panel.add(batting_down_button, BorderLayout.SOUTH);
 		
-		//eastPanel에 추가
-		eastCon.add(pChipBoard, BorderLayout.NORTH);
-		eastCon.add(battingPanel, BorderLayout.CENTER);
-		eastCon.add(sAeButtonPanel, BorderLayout.SOUTH);
+		//east_con에 추가
+		east_con.add(p_chip_board, BorderLayout.NORTH);
+		east_con.add(batting_panel, BorderLayout.CENTER);
+		east_con.add(s_and_e_button_panel, BorderLayout.SOUTH);
 		
 		//board에 추가
-		board.add(southCon, BorderLayout.NORTH);
-		board.add(buttonPanel, BorderLayout.CENTER);
-		board.add(northCon, BorderLayout.SOUTH);
+		board.add(south_con, BorderLayout.NORTH);
+		board.add(button_panel, BorderLayout.CENTER);
+		board.add(north_con, BorderLayout.SOUTH);
 		
 		//cp에 추가
 		cp.add(board, BorderLayout.CENTER);
-		cp.add(eastCon, BorderLayout.EAST);
+		cp.add(east_con, BorderLayout.EAST);
 		
 		//2장씩 나눠주고 시작
 		//플레이어가 블랙잭인 경우 바로 gameOver()로 감
 		init();
 		
 		setTitle("BLACKJACK_GUI");
-		setSize(gameBoardWidth+chipBoardWidth, gameBoardHeight);
+		setSize(game_board_width+chip_board_width, game_board_height);
 		
 		buttonEnableSet();
 		setVisible(true);
@@ -195,20 +195,20 @@ public class GameBoard extends JFrame{
 	public void init() {
 		
 		for (int i = 0; i < 3; i++) {
-			cShowCard[i].setIcon(imageIconImageSetSize(new ImageIcon("./card_image/DEFAULT1.jpg"), 
-					cardWidth, cardHeight));
+			c_show_card[i].setIcon(imageIconImageSetSize(new ImageIcon("./card_image/DEFAULT1.jpg"), 
+					card_width, card_height));
 		}
 		for (int i = 0; i < 3; i++) {
-			pShowCard[i].setIcon(imageIconImageSetSize(new ImageIcon("./card_image/DEFAULT2.jpg"), 
-					cardWidth, cardHeight));
+			p_show_card[i].setIcon(imageIconImageSetSize(new ImageIcon("./card_image/DEFAULT2.jpg"), 
+					card_width, card_height));
 		}
 		
-		humanPlayer.cardSetup(11);
-		computerPlayer.cardSetup(11);
-		dealer.dealOneTo(humanPlayer);
-		dealer.dealOneTo(computerPlayer);
-		dealer.dealOneTo(humanPlayer);
-		dealer.dealOneTo(computerPlayer);
+		human_player.cardSetup(11);
+		computer_player.cardSetup(11);
+		dealer.dealOneTo(human_player);
+		dealer.dealOneTo(computer_player);
+		dealer.dealOneTo(human_player);
+		dealer.dealOneTo(computer_player);
 		update();
 		
 	}
@@ -218,45 +218,45 @@ public class GameBoard extends JFrame{
 	 */
 	public void gameOver() {
 		  cCardSetup(1);
-	      while(computerPlayer.totalScore() <= 16) {
+	      while(computer_player.totalScore() <= 16) {
 	    	 cCardSetup(2);
 	      }
-	      if (humanPlayer.totalScore() == 21 && humanPlayer.getCardCount() == 2) {
-	    	  pScoreBoard.setText("블랙잭!");
-	    	  humanPlayer.youWinBlackjack();
-	    	  stopButton.setIsFirst(false);
+	      if (human_player.totalScore() == 21 && human_player.getCardCount() == 2) {
+	    	  p_score_board.setText("블랙잭!");
+	    	  human_player.youWinBlackjack();
+	    	  stop_button.setIsFirst(false);
 	      }
-	      else if(humanPlayer.totalScore() > 21) {
-	         pScoreBoard.setText("플레이어 버스트: " + "(" + humanPlayer.totalScore() + ":" + computerPlayer.totalScore() + ")");
-	         humanPlayer.youLose();
-	         stopButton.setIsFirst(false);
+	      else if(human_player.totalScore() > 21) {
+	         p_score_board.setText("플레이어 버스트: " + "(" + human_player.totalScore() + ":" + computer_player.totalScore() + ")");
+	         human_player.youLose();
+	         stop_button.setIsFirst(false);
 	      }
-	      else if(computerPlayer.totalScore() > 21) {
-	    	  pScoreBoard.setText("딜러 버스트: " + "(" + humanPlayer.totalScore() + ":" + computerPlayer.totalScore() + ")");
-	         humanPlayer.youWin();
+	      else if(computer_player.totalScore() > 21) {
+	    	  p_score_board.setText("딜러 버스트: " + "(" + human_player.totalScore() + ":" + computer_player.totalScore() + ")");
+	         human_player.youWin();
 	      }
-	      else if(humanPlayer.totalScore() > computerPlayer.totalScore()) {
-	    	  pScoreBoard.setText("플레이어 승리: " + "(" + humanPlayer.totalScore() + ":" + computerPlayer.totalScore() + ")");
-	         humanPlayer.youWin();
+	      else if(human_player.totalScore() > computer_player.totalScore()) {
+	    	  p_score_board.setText("플레이어 승리: " + "(" + human_player.totalScore() + ":" + computer_player.totalScore() + ")");
+	         human_player.youWin();
 	      }
-	      else if(humanPlayer.totalScore() < computerPlayer.totalScore()) {
-	    	 pScoreBoard.setText("딜러 승리: " + "(" + humanPlayer.totalScore() + ":" + computerPlayer.totalScore() + ")");
-	         humanPlayer.youLose();
+	      else if(human_player.totalScore() < computer_player.totalScore()) {
+	    	 p_score_board.setText("딜러 승리: " + "(" + human_player.totalScore() + ":" + computer_player.totalScore() + ")");
+	         human_player.youLose();
 	      }
-	      else if (humanPlayer.totalScore() == computerPlayer.totalScore()) {
-	    	 pScoreBoard.setText("무승부: " + "(" + humanPlayer.totalScore() + ":" + computerPlayer.totalScore() + ")");
-		     humanPlayer.youDraw();
+	      else if (human_player.totalScore() == computer_player.totalScore()) {
+	    	 p_score_board.setText("무승부: " + "(" + human_player.totalScore() + ":" + computer_player.totalScore() + ")");
+		     human_player.youDraw();
 	      }
-	      cScoreBoard.setText("새 게임을 시작하시려면 STOP 버튼을 누르세요");
-	      moreButton.setEnabled(false);
-	      endButton.setEnabled(true);
+	      c_score_board.setText("새 게임을 시작하시려면 STOP 버튼을 누르세요");
+	      more_button.setEnabled(false);
+	      end_button.setEnabled(true);
 	   }
 	
 	/**
-	 * EndButton이 눌렸을 때, 호출되며 fileController의 EndSoWrite를 호출한다.
+	 * EndButton이 눌렸을 때, 호출되며 file_controller의 EndSoWrite를 호출한다.
 	 */
 	public void pressEnd() {
-		fileController.EndSoWrite();
+		file_controller.EndSoWrite();
 		System.exit(1);
 	}
 	
@@ -264,24 +264,24 @@ public class GameBoard extends JFrame{
 	 * more버튼을 눌렀을 때 호출됨, 플레이어 card의 공개 상태를 변경한다.
 	 */
 	public void update() {
-		Card[] hCD = humanPlayer.showCards();
-		Card[] cCD = computerPlayer.showCards();
-		int cnt = hCD.length == 2 ? 1 : 2; //처음 배부했을 때는 length가 2이므로 1로 해준다.
+		Card[] h_card_deck = human_player.showCards();
+		Card[] c_card_deck = computer_player.showCards();
+		int cnt = h_card_deck.length == 2 ? 1 : 2; //처음 배부했을 때는 length가 2이므로 1로 해준다.
 		
 		if (cnt == 1) {
-			ImageIcon img = cardMatchImg(cCD[1]);
-			cShowCard[1].setIcon(img);
-			cScoreBoard.setText("딜러 현 점수(첫 카드 미포함): " + computerPlayer.nFirstTotalScore());
-			ImageIcon img2 = cardMatchImg(hCD[1]);
-			pShowCard[1].setIcon(img2);
-			pScoreBoard.setText("플레이어 현 점수(배팅 후 2장 공개): " + humanPlayer.nFirstTotalScore());
+			ImageIcon img = cardMatchImg(c_card_deck[1]);
+			c_show_card[1].setIcon(img);
+			c_score_board.setText("딜러 현 점수(첫 카드 미포함): " + computer_player.nFirstTotalScore());
+			ImageIcon img2 = cardMatchImg(h_card_deck[1]);
+			p_show_card[1].setIcon(img2);
+			p_score_board.setText("플레이어 현 점수(배팅 후 2장 공개): " + human_player.nFirstTotalScore());
 		}
 		else {
-			for (int i = hCD.length-1; cnt >= 0; i--) {
-				ImageIcon img = cardMatchImg(hCD[i]);
-				pShowCard[cnt--].setIcon(img);
+			for (int i = h_card_deck.length-1; cnt >= 0; i--) {
+				ImageIcon img = cardMatchImg(h_card_deck[i]);
+				p_show_card[cnt--].setIcon(img);
 			}
-			pScoreBoard.setText("플레이어 현 점수: " + humanPlayer.totalScore());
+			p_score_board.setText("플레이어 현 점수: " + human_player.totalScore());
 		}
 		if (scoreCheck() == 2)
 			gameOver();
@@ -291,10 +291,10 @@ public class GameBoard extends JFrame{
 	 * 가려진 플레이어의 첫번째 카드를 공개하고 블랙잭 판단
 	 */
 	public void showFirstHC() {
-		Card[] hCD = humanPlayer.showCards();
-		ImageIcon img = cardMatchImg(hCD[0]);
-		pShowCard[0].setIcon(img);
-		pScoreBoard.setText("플레이어 현 점수: " + humanPlayer.totalScore());
+		Card[] h_card_deck = human_player.showCards();
+		ImageIcon img = cardMatchImg(h_card_deck[0]);
+		p_show_card[0].setIcon(img);
+		p_score_board.setText("플레이어 현 점수: " + human_player.totalScore());
 
 		if(scoreCheck() == 1) gameOver();
 	}
@@ -304,11 +304,11 @@ public class GameBoard extends JFrame{
 	 * @param n
 	 */
 	public void setBattingChip(int n) {
-		battingChip = n;
-		int chips = humanPlayer.getChip();
-		humanPlayer.setChip(chips - n);
-		pChipBoard.setText("현재 보유한 칩:" + humanPlayer.getChip());
-		battingChipBoard.setText(Integer.toString(n));
+		batting_chip = n;
+		int chips = human_player.getChip();
+		human_player.setChip(chips - n);
+		p_chip_board.setText("현재 보유한 칩:" + human_player.getChip());
+		battingchip_board.setText(Integer.toString(n));
 	}
 	
 	/**
@@ -316,15 +316,15 @@ public class GameBoard extends JFrame{
 	 * @return 배팅칩의 개수를 반환
 	 */
 	public int getBattingChip() {
-		return battingChip;
+		return batting_chip;
 	}
 	
 	/**
-	 * isPlaying 값을 바꾸고 buttonEnableSet()을 실행함
-	 * @param b isPlaying값을 세팅할 boolean값
+	 * is_playing 값을 바꾸고 buttonEnableSet()을 실행함
+	 * @param b is_playing값을 세팅할 boolean값
 	 */
 	public void setButtonEnable(boolean b) {
-		isPlaying = b;
+		is_playing = b;
 		buttonEnableSet();
 	}
 	
@@ -335,28 +335,28 @@ public class GameBoard extends JFrame{
 	private void cCardSetup(int n) {
 		int cnt = n;
 		if (cnt != 1)
-			dealer.dealOneTo(computerPlayer);
+			dealer.dealOneTo(computer_player);
         
-        Card[] cCD = computerPlayer.showCards();
-        for (int i = cCD.length-1; cnt >= 0; i--) {
-           ImageIcon img = cardMatchImg(cCD[i]);
-           cShowCard[cnt--].setIcon(img);
+        Card[] c_card_deck = computer_player.showCards();
+        for (int i = c_card_deck.length-1; cnt >= 0; i--) {
+           ImageIcon img = cardMatchImg(c_card_deck[i]);
+           c_show_card[cnt--].setIcon(img);
         }
-        cScoreBoard.setText("딜러 현 점수: " + computerPlayer.totalScore());
+        c_score_board.setText("딜러 현 점수: " + computer_player.totalScore());
 	}
 	
 	/**
-	 * isPlaying에 따라 버튼이 활성화 상태가 변함
-	 * more, stop은 게임 실행 중 사용하므로 isPlaying에 따라
-	 * start, end, up, down은 배팅 시간에 사용하므로 !isPlaying
+	 * is_playing에 따라 버튼이 활성화 상태가 변함
+	 * more, stop은 게임 실행 중 사용하므로 is_playing에 따라
+	 * start, end, up, down은 배팅 시간에 사용하므로 !is_playing
 	 */
 	private void buttonEnableSet() {
-		moreButton.setEnabled(isPlaying);
-		stopButton.setEnabled(isPlaying);
-		startButton.setEnabled(!isPlaying);
-		endButton.setEnabled(!isPlaying);
-		battingUpButton.setEnabled(!isPlaying);
-		battingDownButton.setEnabled(!isPlaying);
+		more_button.setEnabled(is_playing);
+		stop_button.setEnabled(is_playing);
+		startButton.setEnabled(!is_playing);
+		end_button.setEnabled(!is_playing);
+		batting_up_button.setEnabled(!is_playing);
+		batting_down_button.setEnabled(!is_playing);
 	}
 	
 	/** 
@@ -364,9 +364,9 @@ public class GameBoard extends JFrame{
 	 * @return 속행가능: 0, 블랙잭: 1, 버스트: 2
 	 */
 	private int scoreCheck() {
-		int hPScore = humanPlayer.totalScore();
-		if (hPScore < 21) return 0;
-		else if (hPScore == 21) return 1;
+		int h_player_score = human_player.totalScore();
+		if (h_player_score < 21) return 0;
+		else if (h_player_score == 21) return 1;
 		else return 2; 
 	}
 	
@@ -380,10 +380,10 @@ public class GameBoard extends JFrame{
 		int r = c.getRank();
 		
 		ImageIcon img = new ImageIcon();
-		if (s == "SPADES") img = SPADES[r-1];
-		else if (s == "HEARTS") img = HEARTS[r-1];
-		else if (s == "DIAMONDS") img = DIAMONDS[r-1];
-		else if (s == "CLUBS") img = CLUBS[r-1];
+		if (s == "spades") img = spades[r-1];
+		else if (s == "hearts") img = hearts[r-1];
+		else if (s == "diamonds") img = diamonds[r-1];
+		else if (s == "clubs") img = clubs[r-1];
 		
 		return img;
 	}
@@ -396,7 +396,7 @@ public class GameBoard extends JFrame{
 	private void cardImgSetUp(String cardSuits, ImageIcon card[]) {
 		for (int idx = 0; idx < 13; idx++) {
 			String file = "./card_image/" + cardSuits+ "_" + Integer.toString(idx+1) + ".jpg";
-			card[idx] = imageIconImageSetSize(new ImageIcon(file), cardWidth, cardHeight);
+			card[idx] = imageIconImageSetSize(new ImageIcon(file), card_width, card_height);
 		}
 	}
 	
