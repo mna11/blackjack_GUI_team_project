@@ -176,7 +176,6 @@ public class GameBoard extends JFrame{
 		cp.add(east_con, BorderLayout.EAST);
 		
 		//2장씩 나눠주고 시작
-		//플레이어가 블랙잭인 경우 바로 gameOver()로 감
 		init();
 		
 		setTitle("BLACKJACK_GUI");
