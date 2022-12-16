@@ -252,10 +252,10 @@ public class GameBoard extends JFrame{
 	   }
 	
 	/**
-	 * EndButton이 눌렸을 때, 호출되며 file_controller의 EndSoWrite를 호출한다.
+	 * EndButton이 눌렸을 때, 호출되며 file_controller의 endSoWrite를 호출한다.
 	 */
 	public void pressEnd() {
-		file_controller.EndSoWrite();
+		file_controller.endSoWrite();
 		System.exit(1);
 	}
 	

@@ -47,7 +47,7 @@ public class FileController {
 	/**
 	 * EndButton이 눌렸을 때, 정보를 갱신해서 파일을 작성해준다.
 	 */
-	public void EndSoWrite() {
+	public void endSoWrite() {
 		WriteFile writer = new WriteFile();
 		chip = human_player.getChip();
 		String[] line = file_contents.split("\n");
