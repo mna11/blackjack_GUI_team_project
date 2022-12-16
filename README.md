@@ -34,7 +34,7 @@
 **STOP 버튼을 누를 경우 카드를 더 이상 받지 않고 승패 판정을 한다.**  
 
 	- **MORE 버튼을 누른 경우**  
-<a href="https://ibb.co/DRrB7nS"><img src="https://i.ibb.co/RDjXCWV/image.png" width = "400" alt="image" border="0"></a>    카드를 한 장 받고 화면에 보여준다.  
+<a href="https://ibb.co/DRrB7nS"><img src="https://i.ibb.co/RDjXCWV/image.png" width = "400" alt="image" border="0"></a>  카드를 한 장 받고 화면에 보여준다.  
 버스트만 아니라면 플레이어는 다시 MORE 버튼을 누를건지 STOP 버튼을 누를건지 고민한다.
   
 	- **STOP 버튼을 누른 경우**  
