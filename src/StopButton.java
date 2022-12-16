@@ -10,8 +10,8 @@ public class StopButton extends JButton implements ActionListener{
 	 * @param buttonName 버튼 텍스트
 	 * @param gb GameBoard 객체
 	 */
-	public StopButton(String buttonName, GameBoard gb) {
-		super(buttonName);
+	public StopButton(String button_name, GameBoard gb) {
+		super(button_name);
 		game_board = gb;
 		addActionListener(this);
 	}

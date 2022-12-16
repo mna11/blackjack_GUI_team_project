@@ -390,12 +390,12 @@ public class GameBoard extends JFrame{
 	
 	/**
 	 * 무늬와 ImageIcon 배열을 받아서 배열에 사진을 넣어주는 메소드 
-	 * @param cardSuits 카드의 무늬 
+	 * @param card_suits 카드의 무늬 
 	 * @param card ImageIcon 배열 
 	 */
-	private void cardImgSetUp(String cardSuits, ImageIcon card[]) {
+	private void cardImgSetUp(String card_suits, ImageIcon card[]) {
 		for (int idx = 0; idx < 13; idx++) {
-			String file = "./card_image/" + cardSuits+ "_" + Integer.toString(idx+1) + ".jpg";
+			String file = "./card_image/" + card_suits+ "_" + Integer.toString(idx+1) + ".jpg";
 			card[idx] = imageIconImageSetSize(new ImageIcon(file), card_width, card_height);
 		}
 	}

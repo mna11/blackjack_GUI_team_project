@@ -24,6 +24,7 @@
 <a href="https://ibb.co/k2mDXV5"><img src="https://i.ibb.co/SwfmBD5/image.png" width = "400" alt="image" border="0"></a>    
 현재 보유한 칩이 우측 상단에 뜨며 배팅을 하기 전까지는 딜러 카드 뿐만 아니라 플레이어의 카드까지도 한 장만 보여준다.  
 우측 프레임의 **UP, DOWN 버튼으로 배팅액을 조절**할 수 있다.   
+배팅액은 최저 0부터 최대 보유한 칩의 개수까지이다.  
 적절한 액수를 골랐다면 **우측 하단의 START 버튼을 누르면 게임이 진행된다.**  
 
 - **블랙잭 시작**  
@@ -31,16 +32,17 @@
 배팅이 끝났으니 배팅액만큼 칩이 없어지고, 플레이어 카드는 두 장 다 보여준다.  
 게임 진행은 MORE 버튼 또는 STOP 버튼을 선택해서 누를 수 있다.  
 **MORE 버튼을 누를 경우 카드를 한 장 받는다.**  
-**STOP 버튼을 누를 경우 카드를 더 이상 받지 않고 승패 판정을 한다.**  
-
-	- **MORE 버튼을 누른 경우**  
-<a href="https://ibb.co/DRrB7nS"><img src="https://i.ibb.co/RDjXCWV/image.png" width = "400" alt="image" border="0"></a>  
-카드를 한 장 받고 화면에 보여준다.  
-버스트만 아니라면 플레이어는 다시 MORE 버튼을 누를건지 STOP 버튼을 누를건지 고민한다.
-  
-	- **STOP 버튼을 누른 경우**  
-<a href="https://ibb.co/QHQfwZb"><img src="https://i.ibb.co/c831nPg/image.png" width = "400" alt="image" border="0"></a>  
-딜러의 점수가 16을 넘을 때까지 카드를 받아 오픈하고, 플레이어와 점수 비교를 한 뒤, 아래 라벨에 게임 결과를 출력해준다. **( 게임 결과 : ( 플레이어 점수 : 딜러 점수 ))**  
+**STOP 버튼을 누를 경우 카드를 더 이상 받지 않고 승패 판정을 한다.**
+<br>
+	- **MORE 버튼을 누른 경우**      
+	 <a href="https://ibb.co/DRrB7nS"><img src="https://i.ibb.co/RDjXCWV/image.png" width = "400" alt="image" border="0"></a>  
+	 카드를 한 장 받고 화면에 보여준다.  
+	 아래 라벨에는 현재 카드의 총합을 보여줘야한다.  
+	 버스트만 아니라면 플레이어는 다시 MORE 버튼을 누를건지 STOP 버튼을 누를건지 고민한다.  
+	<br>
+	- **STOP 버튼을 누른 경우**    
+	<a href="https://ibb.co/QHQfwZb"><img src="https://i.ibb.co/c831nPg/image.png" width = "400" alt="image" border="0"></a>  
+	딜러의 점수가 16을 넘을 때까지 카드를 받아 오픈하고, 플레이어와 점수 비교를 한 뒤, 아래 라벨에 게임 결과를 출력해준다. **( 게임 결과 : ( 플레이어 점수 : 딜러 점수 ))**  
 	결과가 나오면 배팅액과 결과에 따라 칩의 개수가 바뀐다.  
 	다음 게임을 더 진행하고 싶으면 **STOP 버튼을 한번 더 누르면 된다. 그러면 다시 배팅 시간부터 게임이 시작된다.**
 
