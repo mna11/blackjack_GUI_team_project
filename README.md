@@ -34,17 +34,19 @@
 **MORE 버튼을 누를 경우 카드를 한 장 받는다.**  
 **STOP 버튼을 누를 경우 카드를 더 이상 받지 않고 승패 판정을 한다.**
 <br>
-	- **MORE 버튼을 누른 경우**      
-	 <a href="https://ibb.co/DRrB7nS"><img src="https://i.ibb.co/RDjXCWV/image.png" width = "400" alt="image" border="0"></a>  
-	 카드를 한 장 받고 화면에 보여준다.  
-	 아래 라벨에는 현재 카드의 총합을 보여줘야한다.  
-	 버스트만 아니라면 플레이어는 다시 MORE 버튼을 누를건지 STOP 버튼을 누를건지 고민한다.  
-	<br>
-	- **STOP 버튼을 누른 경우**    
-	<a href="https://ibb.co/QHQfwZb"><img src="https://i.ibb.co/c831nPg/image.png" width = "400" alt="image" border="0"></a>  
-	딜러의 점수가 16을 넘을 때까지 카드를 받아 오픈하고, 플레이어와 점수 비교를 한 뒤, 아래 라벨에 게임 결과를 출력해준다. **( 게임 결과 : ( 플레이어 점수 : 딜러 점수 ))**  
-	결과가 나오면 배팅액과 결과에 따라 칩의 개수가 바뀐다.  
-	다음 게임을 더 진행하고 싶으면 **STOP 버튼을 한번 더 누르면 된다. 그러면 다시 배팅 시간부터 게임이 시작된다.**
+
+- **MORE 버튼을 누른 경우**                         
+<a href="https://ibb.co/DRrB7nS"><img src="https://i.ibb.co/RDjXCWV/image.png" width = "400" alt="image" border="0"></a>  
+카드를 한 장 받고 화면에 보여준다.
+아래 라벨에는 현재 카드의 총합을 보여줘야한다.  
+버스트만 아니라면 플레이어는 다시 MORE 버튼을 누를건지 STOP 버튼을 누를건지 고민한다.  
+<br>
+
+- **STOP 버튼을 누른 경우**                       
+<a href="https://ibb.co/QHQfwZb"><img src="https://i.ibb.co/c831nPg/image.png" width = "400" alt="image" border="0"></a>  
+딜러의 점수가 16을 넘을 때까지 카드를 받아 오픈하고, 플레이어와 점수 비교를 한 뒤, 아래 라벨에 게임 결과를 출력해준다. **( 게임 결과 : ( 플레이어 점수 : 딜러 점수 ))**  
+결과가 나오면 배팅액과 결과에 따라 칩의 개수가 바뀐다.  
+다음 게임을 더 진행하고 싶으면 **STOP 버튼을 한번 더 누르면 된다. 그러면 다시 배팅 시간부터 게임이 시작된다.**
 
 위의 게임 방식이 계속 반복되며 게임이 진행된다.    
 **게임 결과는 총 여섯 가지로 각각의 내용과 보상은 아래와 같다**
